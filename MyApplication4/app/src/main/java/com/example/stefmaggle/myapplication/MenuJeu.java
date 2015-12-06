@@ -37,8 +37,13 @@ public class MenuJeu extends Activity{
         jouer.setOnClickListener(Jouer);
         //prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);//recupere les valeurs enregistrées
         //value = prefs.getInt("high_score", 0); //0 is the default value
+
         //score = (TextView)findViewById(R.id.textView_value);
         //score.setText(value); //change la valeur de la textviex score
+        SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("high_score", 5);
+        editor.commit();
     }
     //ceci est un test
 

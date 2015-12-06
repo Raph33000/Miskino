@@ -124,24 +124,10 @@ public class MainActivity extends Activity {
         });
 
         //On dit a l'image switcher qu'il doit contenir l'array d'images défini plus tôt
-        sortiePhoto.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                imageSwitcher1.setOutAnimation(sortiePhoto);
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imageSwitcher1.setImageResource(imageIds[currentIndex]);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation){
-
-            }
-        });
         imageSwitcher1.setOutAnimation(sortiePhoto);
+        imageSwitcher1.setImageResource(imageIds[currentIndex]);
+
         //imageSwitcher1.setOutAnimation(sortiePhoto);
         //imageSwitcher1.setImageResource(imageIds[currentIndex]);
         // On dit que l'animation "in" c'est in est celle "out" c'est out
