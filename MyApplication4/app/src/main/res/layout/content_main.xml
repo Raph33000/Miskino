@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1">
+
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/second"
+        android:background="@drawable/like_button"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/trois"
+        android:background="@drawable/dislike_button"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
+
+
+    <ImageView
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:id="@+id/imageView"
+        android:scaleType="fitXY"
+        android:src="@drawable/miskine"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Le jeu"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true" />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chronometer"
+        android:layout_above="@+id/second"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Score : 0"
+        android:id="@+id/Scoreview"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/Perduview"
+        android:layout_above="@+id/second"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/plusun"
+        android:layout_alignBottom="@+id/second"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp" />
+
+    <ImageSwitcher
+        android:layout_width="280dp"
+        android:layout_height="330dp"
+        android:background="@drawable/borislike"
+        android:id="@+id/imageSwitcher"
+
+        android:layout_below="@+id/Scoreview"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
