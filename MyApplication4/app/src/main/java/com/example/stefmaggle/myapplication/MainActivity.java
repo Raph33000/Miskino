@@ -124,16 +124,10 @@ public class MainActivity extends Activity {
         });
 
         //On dit a l'image switcher qu'il doit contenir l'array d'images défini plus tôt
-
-        imageSwitcher1.setOutAnimation(sortiePhoto);
         imageSwitcher1.setImageResource(imageIds[currentIndex]);
-
-        //imageSwitcher1.setOutAnimation(sortiePhoto);
-        //imageSwitcher1.setImageResource(imageIds[currentIndex]);
         // On dit que l'animation "in" c'est in est celle "out" c'est out
-        //imageSwitcher1.setInAnimation(entreePhoto);
-
-
+        imageSwitcher1.setInAnimation(entreePhoto);
+        imageSwitcher1.setOutAnimation(sortiePhoto);
 
 
         photo.setVisibility(View.INVISIBLE);
@@ -269,7 +263,6 @@ public class MainActivity extends Activity {
                 }
                 //On change de photos
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
-
 
             } else {
                 //Changer de classe.
