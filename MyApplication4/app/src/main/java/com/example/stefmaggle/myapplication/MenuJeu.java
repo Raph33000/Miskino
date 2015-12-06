@@ -29,6 +29,7 @@ public class MenuJeu extends Activity{
         jouer.startAnimation(arrive);
         jouer.setOnClickListener(Jouer);
     }
+    //ceci est un test
 
     private View.OnClickListener Jouer = new View.OnClickListener() {
         @Override
