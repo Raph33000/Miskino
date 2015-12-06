@@ -76,18 +76,18 @@
         android:layout_marginBottom="36dp" />
 
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="170dp"
         android:layout_height="60dp"
         android:id="@+id/plusun"
+        android:src="@drawable/plusun"
         android:layout_alignBottom="@+id/second"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="39dp" />
 
     <ImageSwitcher
-        android:layout_width="280dp"
-        android:layout_height="330dp"
+        android:layout_width="580dp"
+        android:layout_height="300dp"
         android:id="@+id/imageSwitcher"
-
         android:layout_below="@+id/Scoreview"
         android:layout_centerHorizontal="true" />
 

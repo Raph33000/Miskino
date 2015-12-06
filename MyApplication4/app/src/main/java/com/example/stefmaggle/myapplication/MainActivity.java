@@ -36,6 +36,8 @@ public class MainActivity extends Activity {
     Animation animun;
     Animation animAlpha;
     Animation animArriv;
+    Animation entreePhoto;
+    Animation sortiePhoto;
 
     boolean a = true;
     boolean b = true;
@@ -84,6 +86,8 @@ public class MainActivity extends Activity {
         animun = AnimationUtils.loadAnimation(this, R.anim.anim_plusun);
         animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         animArriv = AnimationUtils.loadAnimation(this, R.anim.anim_arrivee);
+        entreePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_entreephoto);
+        sortiePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_sortie);
 
 
 
@@ -97,7 +101,7 @@ public class MainActivity extends Activity {
 
         like.startAnimation(animArriv);
         dislike.startAnimation(animArriv);
-        photo.startAnimation(animArriv);
+
 
         imageSwitcher1 = (ImageSwitcher) findViewById(R.id.imageSwitcher);
 
@@ -122,16 +126,16 @@ public class MainActivity extends Activity {
         //On dit a l'image switcher qu'il doit contenir l'array d'images défini plus tôt
         imageSwitcher1.setImageResource(imageIds[currentIndex]);
         // On dit que l'animation "in" c'est in est celle "out" c'est out
-        imageSwitcher1.setInAnimation(in);
-        imageSwitcher1.setOutAnimation(out);
+        imageSwitcher1.setInAnimation(entreePhoto);
+        imageSwitcher1.setOutAnimation(sortiePhoto);
 
 
-
+        photo.setVisibility(View.INVISIBLE);
         //---------Listeners Animation-------------------------------
         animun.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                photo.setImageResource(R.drawable.plusun);
+                photo.setVisibility(View.VISIBLE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -143,7 +147,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                photo.setImageResource(0);
+                photo.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -159,7 +163,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                photo.setImageResource(0);
+                photo.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -170,11 +174,7 @@ public class MainActivity extends Activity {
 
         });
 
-        //Petite méthode pour dire d'éffacer "Its a match"
 
-        if (animun.hasEnded()) {
-            photo.setImageResource(0);
-        }
 
         //-------------------Listener du chronometre -------------------------------------
         chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -250,6 +250,7 @@ public class MainActivity extends Activity {
                  score et on l'affiche.
                  On incrémente currentIndex pour passer à la photo suivante
                  dans l'imageSwitcher */
+
                 photo.startAnimation(animun);
                 Score++;
                 ScoreAff = "Score : " + Score;
@@ -299,6 +300,7 @@ public class MainActivity extends Activity {
                     a = false;
 
                 }
+
                 photo.startAnimation(animun);
                 Score++;
                 ScoreAff = "Score : " + Score;
