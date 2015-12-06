@@ -86,7 +86,6 @@
     <ImageSwitcher
         android:layout_width="280dp"
         android:layout_height="330dp"
-        android:background="@drawable/borislike"
         android:id="@+id/imageSwitcher"
 
         android:layout_below="@+id/Scoreview"
