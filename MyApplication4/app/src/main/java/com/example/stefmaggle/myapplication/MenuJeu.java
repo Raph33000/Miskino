@@ -3,6 +3,8 @@ package com.example.stefmaggle.myapplication;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -12,6 +14,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import java.io.IOException;
 
 /**
  * Created by Stephane on 01/12/2015.
@@ -91,10 +95,33 @@ public class MenuJeu extends Activity{
         private View.OnClickListener Jouer = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            play_sound("play.mp3");
             jouer.startAnimation(zoom);
             logo.startAnimation(transitionlogo);
 
 
         }
     };
+
+    public void play_sound(String file_name){
+        final MediaPlayer mp = new MediaPlayer();
+        if(mp.isPlaying())
+        {
+            mp.stop();
+        }
+        try {
+            mp.reset();
+            AssetFileDescriptor afd;
+            afd = getAssets().openFd(file_name);
+            mp.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+            mp.prepare();
+            mp.start();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

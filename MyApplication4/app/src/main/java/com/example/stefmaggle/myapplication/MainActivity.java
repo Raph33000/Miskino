@@ -2,9 +2,12 @@ package com.example.stefmaggle.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -47,6 +52,8 @@ public class MainActivity extends Activity {
     int Score = 0;
     String ScoreAff;
 
+    final MediaPlayer back_music = new MediaPlayer();
+    final MediaPlayer mp = new MediaPlayer();
 
     //Array d'image pour le défilé de photos
     int imageIds[] = {
@@ -109,6 +116,12 @@ public class MainActivity extends Activity {
         //Slide vers la gauche et slide vers la droite
         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+
+
+        //pour la musique de fond
+
+        back_music.setOnCompletionListener(restart_mus);
+        play_sound("musiquefond.mp3", back_music);
 
         imageSwitcher1.setFactory(new ViewSwitcher.ViewFactory() {
 
@@ -181,8 +194,12 @@ public class MainActivity extends Activity {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 // TODO Auto-generated method stub
-                String currentTime = chrono.getText().toString();
-                if (currentTime.equals("00:10")) //put time according to you
+                long elapsedMillis = SystemClock.elapsedRealtime() - chrono.getBase();
+
+
+                double currentTime = (0.001) * elapsedMillis;
+
+                if (currentTime >= 10 ) //put time according to you
                 {
                     chrono.stop();
                     Intent intent = new Intent(MainActivity.this, Rejouer.class);
@@ -250,7 +267,7 @@ public class MainActivity extends Activity {
                  score et on l'affiche.
                  On incrémente currentIndex pour passer à la photo suivante
                  dans l'imageSwitcher */
-
+                play_sound("bip.mp3", mp);
                 photo.startAnimation(animun);
                 Score++;
                 ScoreAff = "Score : " + Score;
@@ -267,7 +284,8 @@ public class MainActivity extends Activity {
             } else {
                 //Changer de classe.
                 //Envoyer Score
-
+                play_sound("mort.mp3", mp);
+                back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
                 intent.putExtra("ScoreAff", ScoreAff);
                 startActivity(intent);
@@ -278,6 +296,26 @@ public class MainActivity extends Activity {
 
     };
     //listener bouton de gauche ( fonctionne comme celui de droite
+    public void play_sound(String file_name, MediaPlayer mp){
+        if(mp.isPlaying())
+        {
+            mp.stop();
+        }
+        try {
+            mp.reset();
+            AssetFileDescriptor afd;
+            afd = getAssets().openFd(file_name);
+            mp.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+            mp.prepare();
+            mp.start();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private OnClickListener dislikeListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -301,6 +339,7 @@ public class MainActivity extends Activity {
 
                 }
 
+                play_sound("bip.mp3", mp);
                 photo.startAnimation(animun);
                 Score++;
                 ScoreAff = "Score : " + Score;
@@ -313,6 +352,8 @@ public class MainActivity extends Activity {
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
 
             } else {
+                play_sound("mort.mp3", mp);
+                back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
                 intent.putExtra("ScoreAff", ScoreAff);
                 startActivity(intent);
@@ -322,6 +363,14 @@ public class MainActivity extends Activity {
         }
 
     };
+
+    private MediaPlayer.OnCompletionListener restart_mus = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            play_sound("musiquefond.mp3", back_music);
+        }
+    };
+
 
     public boolean getRandomBoolean() {
         Random random = new Random();
