@@ -353,12 +353,14 @@ public class MainActivity extends Activity {
             } else {
                 //Changer de classe.
                 //Envoyer Score
+                mCountDownTimer.cancel();
                 play_sound("mort.mp3", mp);
                 back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
                 intent.putExtra("ScoreAff", Score);
                 startActivity(intent);
                 finish();
+
             }
         }
 
@@ -422,6 +424,7 @@ public class MainActivity extends Activity {
                 affichesuperlike();
 
             } else {
+                mCountDownTimer.cancel();
                 play_sound("mort.mp3", mp);
                 back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
