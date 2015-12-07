@@ -201,9 +201,11 @@ public class MainActivity extends Activity {
 
                 if (currentTime >= 10 ) //put time according to you
                 {
+                    play_sound("mort.mp3", mp);
+                    back_music.stop();
                     chrono.stop();
                     Intent intent = new Intent(MainActivity.this, Rejouer.class);
-                    intent.putExtra("ScoreAff", ScoreAff);
+                    intent.putExtra("ScoreAff", Score);
                     startActivity(intent);
                     finish();
                 }
@@ -287,7 +289,7 @@ public class MainActivity extends Activity {
                 play_sound("mort.mp3", mp);
                 back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
-                intent.putExtra("ScoreAff", ScoreAff);
+                intent.putExtra("ScoreAff", Score);
                 startActivity(intent);
                 finish();
             }
@@ -355,7 +357,7 @@ public class MainActivity extends Activity {
                 play_sound("mort.mp3", mp);
                 back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
-                intent.putExtra("ScoreAff", ScoreAff);
+                intent.putExtra("ScoreAff", Score);
                 startActivity(intent);
                 finish();
 
