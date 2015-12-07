@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ public class Rejouer extends Activity {
     TextView ScoreA2;
     Button replay;
     TextView value;
+    Button share;
+    int final_score;
 
     SharedPreferences sharedpreferences;
     String high_score;
@@ -37,12 +40,14 @@ public class Rejouer extends Activity {
         ScoreA2 = (TextView) findViewById(R.id.textView4);
         replay = (Button) findViewById(R.id.button2);
 
+        share = (Button) findViewById(R.id.button);
+        share.setOnClickListener(ShareListener);
         replay.setOnClickListener(RejListener);
 
         Intent intent = getIntent();
         if (intent != null) {
             String Scored = "Score : " + String.valueOf(intent.getIntExtra("ScoreAff", 0));
-            int final_score = intent.getIntExtra("ScoreAff", 0);
+            final_score = intent.getIntExtra("ScoreAff", 0);
             ScoreA2.setText(Scored);
             if (final_score > sharedpreferences.getInt("high", 0))
             {
@@ -55,6 +60,17 @@ public class Rejouer extends Activity {
             value.setText(high_score);
         }
     }
+
+    private View.OnClickListener ShareListener = new View.OnClickListener(){
+
+        public void onClick(View v){
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, "J'ai fait le score de " + String.valueOf(final_score) + " sur l'application Swipe it !! Viens essayer de me battre !");
+            startActivity(Intent.createChooser(intent, "Share"));
+        }
+    };
 
     private View.OnClickListener RejListener = new View.OnClickListener(){
         public void onClick(View v) {
