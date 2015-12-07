@@ -58,7 +58,8 @@ public class MenuJeu extends Activity{
                     public void run() {
                         // your code here
                         jouer.setVisibility(View.INVISIBLE);
-                        swipeit.setImageResource(0);
+                        swipeit.clearAnimation();
+                        swipeit.setVisibility(View.INVISIBLE);
 
                     }
                 }, 200/* 1sec delay */);
@@ -98,7 +99,9 @@ public class MenuJeu extends Activity{
 
             play_sound("play.mp3");
             jouer.startAnimation(zoom);
+
             logo.startAnimation(transitionlogo);
+
 
 
         }
