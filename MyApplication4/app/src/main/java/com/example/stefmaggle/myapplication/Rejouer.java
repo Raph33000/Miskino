@@ -44,7 +44,7 @@ public class Rejouer extends Activity {
             String Scored = "Score : " + String.valueOf(intent.getIntExtra("ScoreAff", 0));
             int final_score = intent.getIntExtra("ScoreAff", 0);
             ScoreA2.setText(Scored);
-            if (final_score > sharedpreferences.getInt("ScoreAff", 0))
+            if (final_score > sharedpreferences.getInt("high", 0))
             {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putInt("high", final_score);

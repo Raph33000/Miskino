@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
     Animation sortiePhoto;
 
     boolean a = true;
-    boolean b = true;
+    boolean b = false;
     boolean d = false;
 
     int i = 0;
