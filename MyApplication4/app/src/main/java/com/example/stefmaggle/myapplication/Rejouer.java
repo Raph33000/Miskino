@@ -9,7 +9,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -23,8 +26,9 @@ public class Rejouer extends Activity {
     TextView ScoreA2;
     Button replay;
     TextView value;
-    Button share;
+    ImageButton share;
     int final_score;
+    Animation zoom;
 
     SharedPreferences sharedpreferences;
     String high_score;
@@ -40,10 +44,11 @@ public class Rejouer extends Activity {
         ScoreA2 = (TextView) findViewById(R.id.textView4);
         replay = (Button) findViewById(R.id.button2);
 
-        share = (Button) findViewById(R.id.button);
+        share = (ImageButton) findViewById(R.id.Button);
         share.setOnClickListener(ShareListener);
         replay.setOnClickListener(RejListener);
 
+        zoom = AnimationUtils.loadAnimation(this, R.anim.anim_zoom);
         Intent intent = getIntent();
         if (intent != null) {
             String Scored = "Score : " + String.valueOf(intent.getIntExtra("ScoreAff", 0));
@@ -64,6 +69,8 @@ public class Rejouer extends Activity {
     private View.OnClickListener ShareListener = new View.OnClickListener(){
 
         public void onClick(View v){
+
+            share.startAnimation(zoom);
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("text/plain");
