@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
@@ -31,10 +32,14 @@ public class MainActivity extends Activity {
 
     ImageButton like = null;
     ImageButton dislike = null;
+    ImageButton superlike = null;
     ImageView photo = null;
+    CountDownTimer mCountDownTimer;
+
+    long timerdumoment;
 
     TextView match = null;
-    Chronometer chrono = null;
+    TextView timer = null;
     TextView ScoreA = null;
 
     Animation animScale;
@@ -43,6 +48,7 @@ public class MainActivity extends Activity {
     Animation animArriv;
     Animation entreePhoto;
     Animation sortiePhoto;
+    Animation animSuperlike;
 
     boolean a = true;
     boolean b = false;
@@ -51,6 +57,11 @@ public class MainActivity extends Activity {
     int i = 0;
     int Score = 0;
     String ScoreAff;
+    int temps = 15000;
+    long temps1;
+
+    Random rand = new Random();
+
 
     final MediaPlayer back_music = new MediaPlayer();
     final MediaPlayer mp = new MediaPlayer();
@@ -84,10 +95,10 @@ public class MainActivity extends Activity {
 
         like = (ImageButton) findViewById(R.id.second);
         dislike = (ImageButton) findViewById(R.id.trois);
+    superlike = (ImageButton) findViewById(R.id.superlike);
 
 
 
-        chrono = (Chronometer) findViewById(R.id.chronometer);
 
         animScale = AnimationUtils.loadAnimation(this, R.anim.anim_zoom);
         animun = AnimationUtils.loadAnimation(this, R.anim.anim_plusun);
@@ -95,19 +106,23 @@ public class MainActivity extends Activity {
         animArriv = AnimationUtils.loadAnimation(this, R.anim.anim_arrivee);
         entreePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_entreephoto);
         sortiePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_sortie);
+        animSuperlike = AnimationUtils.loadAnimation(this, R.anim.anim_superlike);
 
 
 
         match = (TextView) findViewById(R.id.Perduview);
         ScoreA = (TextView) findViewById(R.id.Scoreview);
+        timer = (TextView) findViewById(R.id.timer);
 
         photo = (ImageView) findViewById(R.id.plusun);
 
         like.setOnClickListener(likeListener);
         dislike.setOnClickListener(dislikeListener);
+        superlike.setOnClickListener(superlikeListener);
 
         like.startAnimation(animArriv);
         dislike.startAnimation(animArriv);
+        superlike.setVisibility(View.INVISIBLE);
 
 
         imageSwitcher1 = (ImageSwitcher) findViewById(R.id.imageSwitcher);
@@ -187,30 +202,26 @@ public class MainActivity extends Activity {
 
         });
 
-
-
-        //-------------------Listener du chronometre -------------------------------------
-        chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+        animSuperlike.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                // TODO Auto-generated method stub
-                long elapsedMillis = SystemClock.elapsedRealtime() - chrono.getBase();
-
-
-                double currentTime = (0.001) * elapsedMillis;
-
-                if (currentTime >= 10 ) //put time according to you
-                {
-                    play_sound("mort.mp3", mp);
-                    back_music.stop();
-                    chrono.stop();
-                    Intent intent = new Intent(MainActivity.this, Rejouer.class);
-                    intent.putExtra("ScoreAff", Score);
-                    startActivity(intent);
-                    finish();
-                }
+            public void onAnimationStart(Animation animation) {
             }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                superlike.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+
         });
+
+
+
 
 
 
@@ -222,11 +233,65 @@ public class MainActivity extends Activity {
 
     }
 
+    private OnClickListener superlikeListener = new OnClickListener() {
+
+
+        @Override
+        public void onClick(View v) {
+            temps = (int) (temps1 + 2000);
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();
+            }
+            createCountDownTimer();
+            mCountDownTimer.start();
+
+
+
+            superlike.startAnimation(animSuperlike);
+            play_sound("bip.mp3", mp);
+            photo.startAnimation(animun);
+            Score++;
+            ScoreAff = "Score : " + Score;
+            ScoreA.setText(ScoreAff);
+            currentIndex++;
+            // If index reaches maximum reset it
+            if (currentIndex == messageCount) {
+                currentIndex = 0;
+            }
+            imageSwitcher1.setImageResource(imageIds[currentIndex]);
+
+        }
+    };
+
+    private void affichesuperlike() {
+        int nombre = rand.nextInt(6);
+        if( nombre == 3) superlike.setVisibility(View.VISIBLE);
+    }
+
+    private void createCountDownTimer() {
+        mCountDownTimer = new CountDownTimer(temps, 100) {
+
+            public void onTick(long millisUntilFinished) {
+                temps1 = millisUntilFinished;
+                timer.setText("Temps restant : " + millisUntilFinished / 1000 );
+            }
+
+            public void onFinish() {
+                play_sound("mort.mp3", mp);
+                back_music.stop();
+                Intent intent = new Intent(MainActivity.this, Rejouer.class);
+                intent.putExtra("ScoreAff", Score);
+                startActivity(intent);
+                finish();
+            }
+        };
+    }
 
     //Listener du bouton de droite
     private OnClickListener likeListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
+
 
             v.startAnimation(animScale); //Animation du bouton
             //On créer un boolean aleatoire pour l'inversion des boutons
@@ -236,8 +301,9 @@ public class MainActivity extends Activity {
 
             //Quand l'utilisateur appuie sur like, on met le chrono à 0 et on le lance
             if (i == 0) {
-                chrono.setBase(SystemClock.elapsedRealtime());
-                chrono.start();
+                createCountDownTimer();
+                mCountDownTimer.start();
+
                 i++;
             }
 
@@ -282,6 +348,7 @@ public class MainActivity extends Activity {
                 }
                 //On change de photos
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
+                affichesuperlike();
 
             } else {
                 //Changer de classe.
@@ -352,6 +419,7 @@ public class MainActivity extends Activity {
                     currentIndex = 0;
                 }
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
+                affichesuperlike();
 
             } else {
                 play_sound("mort.mp3", mp);
@@ -372,6 +440,7 @@ public class MainActivity extends Activity {
             play_sound("musiquefond.mp3", back_music);
         }
     };
+
 
 
     public boolean getRandomBoolean() {
