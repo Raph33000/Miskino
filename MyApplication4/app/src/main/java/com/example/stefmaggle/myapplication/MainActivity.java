@@ -464,7 +464,9 @@ public class MainActivity extends Activity {
                 affichesuperlike();
 
             } else {
+                if ( i != 0){
                 mCountDownTimer.cancel();
+                }
                 play_sound("mort.mp3", mp);
                 back_music.stop();
                 Intent intent = new Intent(MainActivity.this, Rejouer.class);
