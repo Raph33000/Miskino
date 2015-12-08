@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -39,6 +40,10 @@ public class MainActivity extends Activity {
     CountDownTimer mCountDownTimer;
 
     long timerdumoment;
+
+    //variables utilisées pour le swipe
+    private float x1,x2, y1;
+    static final int MIN_DISTANCE = 150;
 
     TextView match = null;
     TextView timer = null;
@@ -234,6 +239,38 @@ public class MainActivity extends Activity {
 
 
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                y1 = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                if (x1 >= imageSwitcher1.getLeft() - 200 && x1 <= imageSwitcher1.getLeft() + 200 + imageSwitcher1.getWidth() && y1 >= imageSwitcher1.getTop() - 200 && y1 <= imageSwitcher1.getTop()+ 200 + imageSwitcher1.getHeight())
+                {
+                    float deltaX = x2 - x1;
+                    if (Math.abs(deltaX) > MIN_DISTANCE)
+                    {
+                        if (x2 > x1)
+                        {
+                            like.performClick();
+                        }
+                        else if (x2 < x1)
+                        {
+                            dislike.performClick();
+                        }
+                    }
+                    break;
+
+                }
+        }
+        return super.onTouchEvent(event);
     }
 
     private OnClickListener superlikeListener = new OnClickListener() {
