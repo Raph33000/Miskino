@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.media.AudioManager;
+import android.os.Environment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -97,7 +99,8 @@ public class MainActivity extends Activity {
         dislike = (ImageButton) findViewById(R.id.trois);
     superlike = (ImageButton) findViewById(R.id.superlike);
 
-
+        //Mets par de baisser le son des médias
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 
         animScale = AnimationUtils.loadAnimation(this, R.anim.anim_zoom);
