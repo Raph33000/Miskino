@@ -74,7 +74,7 @@ public class Rejouer extends Activity {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, "J'ai fait le score de " + String.valueOf(final_score) + " sur l'application Swipe it !! Viens essayer de me battre !");
+            intent.putExtra(Intent.EXTRA_TEXT, "J'ai fait le score de " + String.valueOf(final_score) + " sur l'application Swipe it !! Viens essayer de me battre ! http://tsu.olympe.in/Swipeit-0.6.1.apk");
             startActivity(Intent.createChooser(intent, "Share"));
         }
     };
