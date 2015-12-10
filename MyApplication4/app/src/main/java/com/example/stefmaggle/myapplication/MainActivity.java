@@ -5,24 +5,19 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
-import android.os.Environment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
-import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -54,12 +49,13 @@ public class MainActivity extends Activity {
     Animation animAlpha;
     Animation animArriv;
     Animation entreePhoto;
-    Animation sortiePhoto;
+    Animation sortiePhotoDroite;
+    Animation sortiePhotoGauche;
     Animation animSuperlike;
 
-    boolean a = true;
-    boolean b = false;
-    boolean d = false;
+    boolean droite = true;
+    boolean gauche = false;
+    boolean d = true;
 
     int i = 0;
     int Score = 0;
@@ -112,9 +108,11 @@ public class MainActivity extends Activity {
         animun = AnimationUtils.loadAnimation(this, R.anim.anim_plusun);
         animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         animArriv = AnimationUtils.loadAnimation(this, R.anim.anim_arrivee);
-        entreePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_entreephoto);
-        sortiePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_sortie);
+        entreePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_apparition);
+        sortiePhotoDroite = AnimationUtils.loadAnimation(this, R.anim.anim_sortie);
+        sortiePhotoGauche = AnimationUtils.loadAnimation(this, R.anim.anim_sortiegauche);
         animSuperlike = AnimationUtils.loadAnimation(this, R.anim.anim_superlike);
+
 
 
 
@@ -163,8 +161,16 @@ public class MainActivity extends Activity {
         imageSwitcher1.setImageResource(imageIds[currentIndex]);
         // On dit que l'animation "in" c'est in est celle "out" c'est out
         imageSwitcher1.setInAnimation(entreePhoto);
-        imageSwitcher1.setOutAnimation(sortiePhoto);
+        /*if (d == true){
+            imageSwitcher1.clearAnimation();
 
+            imageSwitcher1.setOutAnimation(sortiePhotoDroite);
+        }
+        else if (d == false){
+            imageSwitcher1.clearAnimation();
+            imageSwitcher1.setInAnimation(entreePhoto);
+            imageSwitcher1.setOutAnimation(sortiePhotoGauche);
+        }*/
 
         photo.setVisibility(View.INVISIBLE);
         //---------Listeners Animation-------------------------------
@@ -355,19 +361,21 @@ public class MainActivity extends Activity {
             Et inversement
              */
 
-            if (a == true) {
+            if (droite == true) {
                 if (inversion == true) {
                     like.setBackgroundResource(R.drawable.like_button);
                     dislike.setBackgroundResource(R.drawable.dislike_button);
-                    a = true;
-                    b = false;
+                    droite = true;
+                    gauche = false;
+                    d = true;
 
                 } else if (inversion == false) {
                     //photo.setImageDrawable(getResources().getDrawable(R.drawable.tristan));
                     dislike.setBackgroundResource(R.drawable.like_button);
                     like.setBackgroundResource(R.drawable.dislike_button);
-                    a = false;
-                    b = true;
+                    droite = false;
+                    gauche = true;
+                    d = false;
 
                 }
                 /*Si le joueur a choisi le bon bouton,
@@ -387,8 +395,10 @@ public class MainActivity extends Activity {
                     currentIndex = 0;
                 }
                 //On change de photos
+                imageSwitcher1.setOutAnimation(sortiePhotoDroite);
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
                 affichesuperlike();
+
 
             } else {
                 //Changer de classe.
@@ -435,19 +445,20 @@ public class MainActivity extends Activity {
             inversion = getRandomBoolean();
 
 
-            if (b == true) {
+            if (gauche == true) {
                 if (inversion == true) {
                     like.setBackgroundResource(R.drawable.like_button);
                     dislike.setBackgroundResource(R.drawable.dislike_button);
-                    b = false;
-                    a = true;
+                    gauche = false;
+                    droite = true;
+                    d = true;
 
                 } else if (inversion == false) {
                     dislike.setBackgroundResource(R.drawable.like_button);
                     like.setBackgroundResource(R.drawable.dislike_button);
-                    b = true;
-                    a = false;
-
+                    gauche = true;
+                    droite = false;
+                    d = false;
                 }
 
                 play_sound("bip.mp3", mp);
@@ -460,6 +471,7 @@ public class MainActivity extends Activity {
                 if (currentIndex == messageCount) {
                     currentIndex = 0;
                 }
+                imageSwitcher1.setOutAnimation(sortiePhotoGauche);
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
                 affichesuperlike();
 
