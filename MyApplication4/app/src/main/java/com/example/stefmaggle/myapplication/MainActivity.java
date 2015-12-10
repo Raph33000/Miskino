@@ -178,13 +178,7 @@ public class MainActivity extends Activity {
             @Override
             public void onAnimationStart(Animation animation) {
                 photo.setVisibility(View.VISIBLE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // your code here
-                        photo.startAnimation(animAlpha);
-                    }
-                }, 350/* 1sec delay */);
+
             }
 
             @Override
