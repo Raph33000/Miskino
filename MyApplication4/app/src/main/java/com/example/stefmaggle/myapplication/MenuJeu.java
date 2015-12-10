@@ -31,6 +31,7 @@ public class MenuJeu extends Activity{
     Animation rotationlogo;
     Animation zoomtexte;
     Animation transitionlogo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
