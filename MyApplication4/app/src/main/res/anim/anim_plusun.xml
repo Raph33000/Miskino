@@ -17,12 +17,17 @@
         android:fromAlpha="1.0"
         android:toAlpha="0.0"
         android:duration="50"
-        android:startOffset="300"
+        android:startOffset="450"
         />
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="50"
 
+        />
     <translate
         android:fromYDelta="0%p"
-        android:toYDelta="10%p"
-        android:duration = "400"/>
+        android:toYDelta="20%p"
+        android:duration = "500"/>
 
 </set>

@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
     Animation sortiePhotoDroite;
     Animation sortiePhotoGauche;
     Animation animSuperlike;
+    Animation apparitionSL;
 
     boolean droite = true;
     boolean gauche = false;
@@ -119,6 +120,7 @@ public class MainActivity extends Activity {
         sortiePhotoDroite = AnimationUtils.loadAnimation(this, R.anim.anim_sortie);
         sortiePhotoGauche = AnimationUtils.loadAnimation(this, R.anim.anim_sortiegauche);
         animSuperlike = AnimationUtils.loadAnimation(this, R.anim.anim_superlike);
+        apparitionSL = AnimationUtils.loadAnimation(this, R.anim.anim_apparitionsl);
 
 
 
@@ -305,7 +307,10 @@ public class MainActivity extends Activity {
 
     private void affichesuperlike() {
         int nombre = rand.nextInt(6);
-        if( nombre == 3) superlike.setVisibility(View.VISIBLE);
+        if( nombre == 3) {
+            superlike.setVisibility(View.VISIBLE);
+            superlike.startAnimation(apparitionSL);
+        }
     }
 
     private void createCountDownTimer() {
@@ -408,6 +413,7 @@ public class MainActivity extends Activity {
                 //On change de photos
                 imageSwitcher1.setOutAnimation(sortiePhotoDroite);
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
+                superlike.setVisibility(View.INVISIBLE);
                 affichesuperlike();
                 itsamatch();
 
@@ -485,6 +491,7 @@ public class MainActivity extends Activity {
                 }
                 imageSwitcher1.setOutAnimation(sortiePhotoGauche);
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
+                superlike.setVisibility(View.INVISIBLE);
                 affichesuperlike();
                 itsamatch();
 
