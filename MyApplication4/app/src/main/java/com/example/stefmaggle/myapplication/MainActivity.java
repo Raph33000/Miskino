@@ -280,6 +280,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View v) {
+
             temps = (int) (temps1 + 2000);
             if (mCountDownTimer != null) {
                 mCountDownTimer.cancel();
@@ -301,7 +302,7 @@ public class MainActivity extends Activity {
                 currentIndex = 0;
             }
             imageSwitcher1.setImageResource(imageIds[currentIndex]);
-
+            superlike.setClickable(false);
         }
     };
 
@@ -310,6 +311,7 @@ public class MainActivity extends Activity {
         if( nombre == 3) {
             superlike.setVisibility(View.VISIBLE);
             superlike.startAnimation(apparitionSL);
+            superlike.setClickable(true);
         }
     }
 
