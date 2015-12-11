@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 
     //variables utilisées pour le swipe
     private float x1,x2, y1;
-    static final int MIN_DISTANCE = 150;
+    static final int MIN_DISTANCE = 50;
 
     TextView match = null;
     TextView timer = null;
@@ -46,6 +46,9 @@ public class MainActivity extends Activity {
 
     Animation animScale;
     Animation animun;
+    Animation animun2;
+    Animation animun3;
+    Animation animun4;
     Animation animAlpha;
     Animation animArriv;
     Animation entreePhoto;
@@ -106,6 +109,9 @@ public class MainActivity extends Activity {
 
         animScale = AnimationUtils.loadAnimation(this, R.anim.anim_zoom);
         animun = AnimationUtils.loadAnimation(this, R.anim.anim_plusun);
+        animun2 = AnimationUtils.loadAnimation(this, R.anim.anim_plusun2);
+        animun3 = AnimationUtils.loadAnimation(this, R.anim.anim_plusun3);
+        animun4 = AnimationUtils.loadAnimation(this, R.anim.anim_plusun4);
         animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         animArriv = AnimationUtils.loadAnimation(this, R.anim.anim_arrivee);
         entreePhoto = AnimationUtils.loadAnimation(this, R.anim.anim_apparition);
@@ -142,6 +148,7 @@ public class MainActivity extends Activity {
         //pour la musique de fond
 
         back_music.setOnCompletionListener(restart_mus);
+
         play_sound("musiquefond.mp3", back_music);
 
         imageSwitcher1.setFactory(new ViewSwitcher.ViewFactory() {
@@ -174,23 +181,11 @@ public class MainActivity extends Activity {
 
         photo.setVisibility(View.INVISIBLE);
         //---------Listeners Animation-------------------------------
-        animun.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                photo.setVisibility(View.VISIBLE);
+        animun.setAnimationListener(animunlist);
+        animun2.setAnimationListener(animunlist);
+        animun3.setAnimationListener(animunlist);
+        animun4.setAnimationListener(animunlist);
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                photo.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
 
         animAlpha.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -327,6 +322,23 @@ public class MainActivity extends Activity {
         };
     }
 
+    private Animation.AnimationListener animunlist = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            photo.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            photo.setVisibility(View.INVISIBLE);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    };
+
     //Listener du bouton de droite
     private OnClickListener likeListener = new OnClickListener() {
         @Override
@@ -392,6 +404,7 @@ public class MainActivity extends Activity {
                 imageSwitcher1.setOutAnimation(sortiePhotoDroite);
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
                 affichesuperlike();
+                itsamatch();
 
 
             } else {
@@ -456,7 +469,7 @@ public class MainActivity extends Activity {
                 }
 
                 play_sound("bip.mp3", mp);
-                photo.startAnimation(animun);
+
                 Score++;
                 ScoreAff = "Score : " + Score;
                 ScoreA.setText(ScoreAff);
@@ -468,6 +481,7 @@ public class MainActivity extends Activity {
                 imageSwitcher1.setOutAnimation(sortiePhotoGauche);
                 imageSwitcher1.setImageResource(imageIds[currentIndex]);
                 affichesuperlike();
+                itsamatch();
 
             } else {
                 if ( i != 0){
@@ -497,6 +511,25 @@ public class MainActivity extends Activity {
     public boolean getRandomBoolean() {
         Random random = new Random();
         return random.nextBoolean();
+    }
+
+    public void itsamatch(){
+
+        int nombre = rand.nextInt(3);
+        switch (nombre){
+            case 0:
+                photo.startAnimation(animun);
+                break;
+            case 1:
+                photo.startAnimation(animun2);
+                break;
+            case 2:
+                photo.startAnimation(animun3);
+                break;
+            case 3:
+                photo.startAnimation(animun4);
+                break;
+        }
     }
     /*
     private void showElapsedTime() {
