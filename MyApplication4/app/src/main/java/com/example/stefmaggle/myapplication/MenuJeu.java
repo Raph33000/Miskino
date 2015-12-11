@@ -1,19 +1,26 @@
 package com.example.stefmaggle.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -31,6 +38,11 @@ public class MenuJeu extends Activity{
     Animation rotationlogo;
     Animation zoomtexte;
     Animation transitionlogo;
+
+    public static final String MyPREFERENCES = "MyPrefs";
+    String high_score;
+    SharedPreferences sharedpreferences;
+    TextView value;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +63,16 @@ public class MenuJeu extends Activity{
         jouer.startAnimation(arrive);
         jouer.setOnClickListener(Jouer);
 
+        sharedpreferences = this.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        Typeface font = Typeface.createFromAsset(getAssets(),"dimbo.ttf");
+        value = (TextView)findViewById(R.id.TextviewScore);
+        value.setTypeface(font);
+        high_score = value.getText() + String.valueOf(sharedpreferences.getInt("high", 0));
+        value.setText(high_score);
         transitionlogo.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                value.setVisibility(View.INVISIBLE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
