@@ -48,14 +48,13 @@
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="1600dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:id="@+id/jouer_button"
         android:scaleType="fitXY"
-        android:background="@drawable/playboutton"
+        android:background="@drawable/boutonplay"
         android:layout_below="@+id/imageView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/imageView6"
+        android:layout_alignStart="@+id/imageView6" />
 
 </RelativeLayout>
