@@ -3,6 +3,7 @@ package com.example.stefmaggle.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -125,6 +126,10 @@ public class MainActivity extends Activity {
         match = (TextView) findViewById(R.id.Perduview);
         ScoreA = (TextView) findViewById(R.id.Scoreview);
         timer = (TextView) findViewById(R.id.timer);
+        Typeface font = Typeface.createFromAsset(getAssets(),"dimbo.ttf");
+        timer.setTypeface(font);
+        ScoreA.setTypeface(font);
+
 
         photo = (ImageView) findViewById(R.id.plusun);
 

@@ -19,6 +19,7 @@
         android:duration="50"
         android:startOffset="300"
         />
+
     <translate
         android:fromYDelta="0%p"
         android:toYDelta="10%p"

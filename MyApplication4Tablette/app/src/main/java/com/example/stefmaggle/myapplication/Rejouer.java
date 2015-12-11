@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -24,11 +26,14 @@ public class Rejouer extends Activity {
 
 
     TextView ScoreA2;
+    TextView Partiefin;
     Button replay;
     TextView value;
+    ImageView logo;
     ImageButton share;
     int final_score;
     Animation zoom;
+    Animation animzoomlogo;
 
     SharedPreferences sharedpreferences;
     String high_score;
@@ -42,11 +47,23 @@ public class Rejouer extends Activity {
         sharedpreferences = this.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         ScoreA2 = (TextView) findViewById(R.id.textView4);
+        Partiefin = (TextView) findViewById(R.id.partiefin);
         replay = (Button) findViewById(R.id.button2);
+        logo = (ImageView) findViewById(R.id.logo);
+
+        animzoomlogo = AnimationUtils.loadAnimation(this, R.anim.anim_effettextelogo);
+        logo.startAnimation(animzoomlogo);
+        ScoreA2.startAnimation(animzoomlogo);
+
 
         share = (ImageButton) findViewById(R.id.Button);
         share.setOnClickListener(ShareListener);
         replay.setOnClickListener(RejListener);
+        Typeface font = Typeface.createFromAsset(getAssets(),"dimbo.ttf");
+        ScoreA2.setTypeface(font);
+        Partiefin.setTypeface(font);
+
+
 
         zoom = AnimationUtils.loadAnimation(this, R.anim.anim_zoom);
         Intent intent = getIntent();
@@ -61,6 +78,7 @@ public class Rejouer extends Activity {
                 editor.commit();
             }
             value = (TextView) findViewById(R.id.text_high);
+            value.setTypeface(font);
             high_score = value.getText() + String.valueOf(sharedpreferences.getInt("high", 0));
             value.setText(high_score);
         }
